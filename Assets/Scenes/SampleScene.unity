@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 478188084}
   - component: {fileID: 478188083}
   m_Layer: 0
-  m_Name: FlowCodeMonobehavior
+  m_Name: FlowGraphRunner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -151,6 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 063301861a5d40fc946bb044bc2b8072, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  behaviorTree: {fileID: 0}
 --- !u!4 &478188084
 Transform:
   m_ObjectHideFlags: 0
