@@ -1,0 +1,16 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Assets/FlowGraph/Editor/BehaviorTreeEditor.uss?fileID=7433441132597879392&amp;guid=c1cf329d416e3466ba09c6ff7a9533da&amp;type=3#BehaviorTreeEditor" />
+    <uie:Toolbar>
+        <uie:ToolbarMenu tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" text="Assets" />
+    </uie:Toolbar>
+    <FlowGraph.Editor.SplitView fixed-pane-initial-dimension="300">
+        <ui:VisualElement name="left-panel" style="flex-grow: 1;">
+            <ui:Label tabindex="-1" text="Inspector" parse-escape-sequences="true" display-tooltip-when-elided="true" style="color: rgb(196, 196, 196); -unity-text-outline-color: rgba(40, 40, 40, 0); background-color: rgb(37, 37, 37);" />
+            <FlowGraph.Editor.InspectorView />
+        </ui:VisualElement>
+        <ui:VisualElement name="right-panel" style="flex-grow: 1;">
+            <ui:Label tabindex="-1" text="Graph" parse-escape-sequences="true" display-tooltip-when-elided="true" style="color: rgb(196, 196, 196); background-color: rgb(37, 37, 37);" />
+            <FlowGraph.Editor.BehaviorTreeView name="BehaviorTreeView" style="flex-grow: 1;" />
+        </ui:VisualElement>
+    </FlowGraph.Editor.SplitView>
+</ui:UXML>

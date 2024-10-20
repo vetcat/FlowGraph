@@ -6,7 +6,8 @@ namespace FlowGraph
     {
         public ENodeState state = ENodeState.Running;
         public bool started;
-
+        public string guid;
+        
         public ENodeState Update()
         {
             if (!started)
