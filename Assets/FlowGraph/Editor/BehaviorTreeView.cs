@@ -8,6 +8,8 @@ namespace FlowGraph.Editor
     public class BehaviorTreeView : GraphView
     {
         public new class UxmlFactory : UxmlFactory<BehaviorTreeView, UxmlTraits> { }
+
+        private BehaviorTree _tree;
         
         public BehaviorTreeView()
         {
@@ -21,6 +23,19 @@ namespace FlowGraph.Editor
             var styleSheet =
                 AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/FlowGraph/Editor/BehaviorTreeEditor.uss");
             styleSheets.Add(styleSheet);
+        }
+
+        public void PopulateView(BehaviorTree tree)
+        {
+            _tree = tree;
+            DeleteElements(graphElements);
+            _tree.nodes.ForEach(CreateNodeView);
+        }
+
+        private void CreateNodeView(Node node)
+        {
+            var nodeView = new NodeView(node);
+            AddElement(nodeView);
         }
     }
 }
