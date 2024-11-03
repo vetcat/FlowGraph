@@ -42,5 +42,51 @@ namespace FlowGraph
             AssetDatabase.RemoveObjectFromAsset(node);
             AssetDatabase.SaveAssets();
         }
+
+        public void AddChild(Node parent, Node child)
+        {
+            //todo : need work with attribute later
+            if (parent is DecoratorNode decoratorNode)
+            {
+                decoratorNode.child = child;
+            }
+
+            if (parent is CompositeNode compositeNode)
+            {
+                compositeNode.children.Add(child);
+            }
+        }
+        
+        public void RemoveChild(Node parent, Node child)
+        {
+            //todo : need work with attribute later
+            if (parent is DecoratorNode decoratorNode)
+            {
+                decoratorNode.child = null;
+            }
+
+            if (parent is CompositeNode compositeNode)
+            {
+                compositeNode.children.Remove(child);
+            }
+        }
+
+        public List<Node> GetChildren(Node parent)
+        {
+            //todo : need work with attribute later
+            var children = new List<Node>();
+            
+            if (parent is DecoratorNode decoratorNode && decoratorNode.child != null)
+            {
+                children.Add(decoratorNode.child);
+            }
+
+            if (parent is CompositeNode compositeNode )
+            {
+                return compositeNode.children;
+            }
+
+            return children;
+        }
     }
 }

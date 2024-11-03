@@ -32,8 +32,13 @@ namespace FlowGraph.Editor
                 AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/FlowGraph/Editor/BehaviorTreeEditor.uss");
             root.styleSheets.Add(styleSheet);
 
-            _treeView = root.Q<BehaviorTreeView>();
-            _inspectorView = root.Q<InspectorView>();
+            // _treeView = root.Q<BehaviorTreeView>();
+            // _inspectorView = root.Q<InspectorView>();
+            _treeView = new BehaviorTreeView();
+            root.Add(_treeView);
+            _treeView.StretchToParentSize();
+
+            OnSelectionChange();
         }
 
         private void OnSelectionChange()
@@ -41,7 +46,6 @@ namespace FlowGraph.Editor
             var tree = Selection.activeObject as BehaviorTree;
             if (tree)
             {
-                Debug.LogError($"{GetType().Name} OnSelectionChange select BehaviorTree");
                 _treeView.PopulateView(tree);
             }
         }

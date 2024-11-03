@@ -7,6 +7,7 @@ namespace FlowGraph
         public ENodeState state = ENodeState.Running;
         public bool started;
         public string guid;
+        public Vector2 position;
         
         public ENodeState Update()
         {

@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -35,17 +37,39 @@ namespace FlowGraph.Editor
             DeleteElements(graphElements);
             graphViewChanged += OnGraphViewChanged;
             _tree.nodes.ForEach(CreateNodeView);
+            _tree.nodes.ForEach(CreateEdges);
+        }
+
+        public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
+        {
+            return ports.ToList().Where(endPort => endPort.direction != startPort.direction && endPort.node != startPort.node).ToList();
         }
 
         private GraphViewChange OnGraphViewChanged(GraphViewChange graphViewChange)
         {
-            graphViewChange.elementsToRemove?.ForEach(e =>
+            graphViewChange.elementsToRemove?.ForEach(element =>
             {
-                if (e is NodeView nodeView)
+                if (element is NodeView nodeView)
                 {
-                    _tree.DeleteNode(nodeView.Node);
+                    _tree.DeleteNode(nodeView.node);
+                }
+
+                if (element is Edge edge)
+                {
+                    NodeView parentView = edge.output.node as NodeView;
+                    NodeView childView = edge.input.node as NodeView;
+                    _tree.RemoveChild(parentView.node, childView.node);
                 }
             });
+
+            graphViewChange.edgesToCreate?.ForEach(edge =>
+            {
+                NodeView parentView = edge.output.node as NodeView;
+                NodeView childView = edge.input.node as NodeView;
+                _tree.AddChild(parentView.node, childView.node);
+                
+            });
+            
             return graphViewChange;
         }
 
@@ -64,7 +88,6 @@ namespace FlowGraph.Editor
 
         private void CreateNode(Type type)
         {
-            Debug.LogError($"{GetType().Name} CreateNode type {type.Name}");
             var node = _tree.CreateNode(type);
             CreateNodeView(node);
         }
@@ -73,6 +96,24 @@ namespace FlowGraph.Editor
         {
             var nodeView = new NodeView(node);
             AddElement(nodeView);
+        }
+        
+        private void CreateEdges(Node node)
+        {
+            var children = _tree.GetChildren(node);
+            children.ForEach(c =>
+            {
+                NodeView parentView = FindNodeView(node);
+                NodeView childView = FindNodeView(c);
+
+                var edge = parentView.output.ConnectTo(childView.input);
+                AddElement(edge);
+            });
+        }
+
+        private NodeView FindNodeView(Node node)
+        {
+            return GetNodeByGuid(node.guid) as NodeView;
         }
     }
 }
