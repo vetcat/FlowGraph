@@ -9,8 +9,8 @@ namespace FlowGraph.Editor
         [SerializeField]
         private VisualTreeAsset m_VisualTreeAsset = default;
 
-        private BehaviorTreeView _treeView;
-        private InspectorView _inspectorView;
+        private BehaviorTreeView treeView;
+        private InspectorView inspectorView;
 
         [MenuItem("FlowGraph/BehaviorTreeEditor")]
         public static void OpenWindow()
@@ -26,28 +26,37 @@ namespace FlowGraph.Editor
         
             var visualTree =
                 AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/FlowGraph/Editor/BehaviorTreeEditor.uxml");
+            
             visualTree.CloneTree(root);
         
             var styleSheet =
                 AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/FlowGraph/Editor/BehaviorTreeEditor.uss");
             root.styleSheets.Add(styleSheet);
 
-            // _treeView = root.Q<BehaviorTreeView>();
-            // _inspectorView = root.Q<InspectorView>();
-            _treeView = new BehaviorTreeView();
-            root.Add(_treeView);
-            _treeView.StretchToParentSize();
+            treeView = root.Q<BehaviorTreeView>();
+            treeView.OnNodeSelected += OnNodeViewSelectedChange;
+            
+            inspectorView = root.Q<InspectorView>();
+
+            treeView.focusable = true;
+            treeView.StretchToParentSize();
 
             OnSelectionChange();
+            
         }
 
         private void OnSelectionChange()
         {
             var tree = Selection.activeObject as BehaviorTree;
-            if (tree)
+            if (tree && AssetDatabase.CanOpenAssetInEditor(tree.GetInstanceID()))
             {
-                _treeView.PopulateView(tree);
+                treeView.PopulateView(tree);
             }
+        }
+
+        private void OnNodeViewSelectedChange(NodeView nodeView)
+        {
+            inspectorView.UpdateSelection(nodeView);
         }
     }
 }

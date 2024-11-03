@@ -10,6 +10,8 @@ namespace FlowGraph.Editor
 {
     public class BehaviorTreeView : GraphView
     {
+        public Action<NodeView> OnNodeSelected;
+        
         public new class UxmlFactory : UxmlFactory<BehaviorTreeView, UxmlTraits>
         {
         }
@@ -36,7 +38,25 @@ namespace FlowGraph.Editor
             graphViewChanged -= OnGraphViewChanged;
             DeleteElements(graphElements);
             graphViewChanged += OnGraphViewChanged;
+
+            if (tree.rootNode == null)
+            {
+                tree.rootNode = tree.CreateNode(typeof(RootNode)) as RootNode;
+                EditorUtility.SetDirty(tree);
+                AssetDatabase.SaveAssets();
+            }
             _tree.nodes.ForEach(CreateNodeView);
+            // Create edges
+            // tree.nodes.ForEach(n => {
+            //     var children = BehaviourTree.GetChildren(n);
+            //     children.ForEach(c => {
+            //         NodeView parentView = FindNodeView(n);
+            //         NodeView childView = FindNodeView(c);
+            //
+            //         Edge edge = parentView.output.ConnectTo(childView.input);
+            //         AddElement(edge);
+            //     });
+            // });
             _tree.nodes.ForEach(CreateEdges);
         }
 
@@ -95,17 +115,17 @@ namespace FlowGraph.Editor
         private void CreateNodeView(Node node)
         {
             var nodeView = new NodeView(node);
+            nodeView.OnNodeSelected = OnNodeSelected;
             AddElement(nodeView);
         }
         
         private void CreateEdges(Node node)
         {
             var children = _tree.GetChildren(node);
+            var parentView = FindNodeView(node);
             children.ForEach(c =>
             {
-                NodeView parentView = FindNodeView(node);
-                NodeView childView = FindNodeView(c);
-
+                var childView = FindNodeView(c);
                 var edge = parentView.output.ConnectTo(childView.input);
                 AddElement(edge);
             });

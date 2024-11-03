@@ -4,10 +4,10 @@ namespace FlowGraph
 {
     public abstract class Node : ScriptableObject
     {
-        public ENodeState state = ENodeState.Running;
-        public bool started;
+        [HideInInspector] public ENodeState state = ENodeState.Running;
+        [HideInInspector] public bool started;
         public string guid;
-        public Vector2 position;
+        [HideInInspector] public Vector2 position;
         
         public ENodeState Update()
         {

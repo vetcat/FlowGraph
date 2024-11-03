@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 813caf9e6da147a3b68d064527b6c078, type: 3}
   m_Name: BehaviorTree
   m_EditorClassIdentifier: 
-  rootNode: {fileID: 0}
+  rootNode: {fileID: 2251852048927082706}
   state: 1
   nodes:
-  - {fileID: 1088499491085326585}
-  - {fileID: 8220030335049462900}
---- !u!114 &1088499491085326585
+  - {fileID: 2251852048927082706}
+  - {fileID: 6342869994119849407}
+--- !u!114 &2251852048927082706
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -26,28 +26,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc1fa378fdbf4e37ae44bfbc46ab00a4, type: 3}
-  m_Name: SequencerNode
+  m_Script: {fileID: 11500000, guid: a7c20152d9d140199c1253b0573e01d5, type: 3}
+  m_Name: RootNode
   m_EditorClassIdentifier: 
   state: 1
   started: 0
-  guid: fa06a35d4f11841c791236c27032a79a
-  position: {x: -136.2097, y: -92.634155}
-  children: []
---- !u!114 &8220030335049462900
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7ed31ca81474cbab080ee1923d614ff, type: 3}
-  m_Name: DebugLogNode
-  m_EditorClassIdentifier: 
-  state: 1
-  started: 0
-  guid: 299a4732f1ffe425fa6cd70d2f1e4636
+  guid: 2c1f31ed5a971467fadbf8fa1a737371
   position: {x: 0, y: 0}
-  message: 
+  child: {fileID: 0}
+--- !u!114 &6342869994119849407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4e3a9d12b1c473597026317e24ab8a2, type: 3}
+  m_Name: WaitNode
+  m_EditorClassIdentifier: 
+  state: 1
+  started: 0
+  guid: a4c73ae2b5d314c50bd27401235871d3
+  position: {x: 0, y: 0}
+  duration: 1

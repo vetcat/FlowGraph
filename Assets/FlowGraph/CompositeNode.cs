@@ -1,9 +1,10 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace FlowGraph
 {
     public abstract class CompositeNode : Node
     {
-        public List<Node> children = new();
+        [HideInInspector] public List<Node> children = new();
     }
 }

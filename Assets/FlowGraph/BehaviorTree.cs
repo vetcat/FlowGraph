@@ -8,8 +8,8 @@ namespace FlowGraph
     [CreateAssetMenu(fileName = "BehaviorTree", menuName = "FlowGraph/BehaviorTree")]
     public class BehaviorTree : ScriptableObject
     {
-        public Node rootNode;
-        public ENodeState state = ENodeState.Running;
+        [HideInInspector] public Node rootNode;
+        [HideInInspector] public ENodeState state = ENodeState.Running;
 
         public List<Node> nodes = new();
 
@@ -23,7 +23,7 @@ namespace FlowGraph
             return state;
         }
 
-        public Node CreateNode(System.Type type)
+        public Node CreateNode(Type type)
         {
             var node = CreateInstance(type) as Node;
             node.name = type.Name;
@@ -55,6 +55,11 @@ namespace FlowGraph
             {
                 compositeNode.children.Add(child);
             }
+
+            if (parent is RootNode root)
+            {
+                root.child = child;
+            }
         }
         
         public void RemoveChild(Node parent, Node child)
@@ -69,6 +74,11 @@ namespace FlowGraph
             {
                 compositeNode.children.Remove(child);
             }
+            
+            if (parent is RootNode root)
+            {
+                root.child = null;
+            }
         }
 
         public List<Node> GetChildren(Node parent)
@@ -81,9 +91,14 @@ namespace FlowGraph
                 children.Add(decoratorNode.child);
             }
 
-            if (parent is CompositeNode compositeNode )
+            if (parent is CompositeNode compositeNode && compositeNode.children != null)
             {
                 return compositeNode.children;
+            }
+            
+            if (parent is RootNode root && root.child != null)
+            {
+                children.Add(root.child);
             }
 
             return children;

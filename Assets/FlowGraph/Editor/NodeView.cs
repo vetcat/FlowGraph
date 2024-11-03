@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEditor.Experimental.GraphView;
 
@@ -5,6 +6,8 @@ namespace FlowGraph.Editor
 {
     public class NodeView : UnityEditor.Experimental.GraphView.Node
     {
+        public Action<NodeView> OnNodeSelected;
+        
         public Node node;
         public Port input;
         public Port output;
@@ -36,6 +39,10 @@ namespace FlowGraph.Editor
             {
                 input = InstantiatePort(Orientation.Horizontal, Direction.Input, Port.Capacity.Single, typeof(bool));
             }
+            else if (node is RootNode)
+            {
+                
+            }
 
             if (input != null)
             {
@@ -59,6 +66,10 @@ namespace FlowGraph.Editor
             {
                 output = InstantiatePort(Orientation.Horizontal, Direction.Output, Port.Capacity.Single, typeof(bool));
             }
+            else if (node is RootNode)
+            {
+                output = InstantiatePort(Orientation.Horizontal, Direction.Output, Port.Capacity.Single, typeof(bool));
+            }
 
             if (output != null)
             {
@@ -72,6 +83,12 @@ namespace FlowGraph.Editor
             base.SetPosition(newPos);
             node.position.x = newPos.xMin;
             node.position.y = newPos.yMin;
+        }
+
+        public override void OnSelected()
+        {
+            base.OnSelected();
+            OnNodeSelected?.Invoke(this);
         }
     }
 }
