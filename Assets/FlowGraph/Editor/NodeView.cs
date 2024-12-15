@@ -29,7 +29,7 @@ namespace FlowGraph.Editor
             //todo need work from attribute
             if (node is ActionNode)
             {
-                input = InstantiatePort(Orientation.Horizontal, Direction.Input, Port.Capacity.Single, typeof(bool));
+              
             }
             else if (node is CompositeNode)
             {
@@ -41,7 +41,7 @@ namespace FlowGraph.Editor
             }
             else if (node is RootNode)
             {
-                
+                input = InstantiatePort(Orientation.Horizontal, Direction.Input, Port.Capacity.Single, typeof(bool));
             }
 
             if (input != null)
@@ -56,7 +56,7 @@ namespace FlowGraph.Editor
             //todo need work from attribute
             if (node is ActionNode)
             {
-               
+                input = InstantiatePort(Orientation.Horizontal, Direction.Input, Port.Capacity.Single, typeof(bool));
             }
             else if (node is CompositeNode)
             {

@@ -4,8 +4,10 @@ namespace FlowGraph
 {
     public abstract class Node : ScriptableObject
     {
-        [HideInInspector] public ENodeState state = ENodeState.Running;
-        [HideInInspector] public bool started;
+        //[HideInInspector] 
+        public ENodeState state = ENodeState.Running;
+        //[HideInInspector] 
+        public bool started;
         public string guid;
         [HideInInspector] public Vector2 position;
         
@@ -25,6 +27,11 @@ namespace FlowGraph
                 OnStop();
             }
             return state;
+        }
+
+        public virtual Node Clone()
+        {
+            return Instantiate(this);
         }
 
         protected abstract void OnStart();

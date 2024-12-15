@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace FlowGraph
 {
     public class RootNode : Node
@@ -14,6 +16,13 @@ namespace FlowGraph
         protected override ENodeState OnUpdate()
         {
             return child.Update();
+        }
+
+        public override Node Clone()
+        {
+            RootNode node = Instantiate(this);
+            node.child = child.Clone();
+            return node;
         }
     }
 }
