@@ -12,7 +12,7 @@ namespace FlowGraph.Editor
         public Port input;
         public Port output;
 
-        public NodeView(Node node)
+        public NodeView(Node node) : base("Assets/FlowGraph/Editor/NodeView.uxml")
         {
             this.node = node;
             title = node.name;
@@ -33,21 +33,21 @@ namespace FlowGraph.Editor
             }
             else if (node is CompositeNode)
             {
-                input = InstantiatePort(Orientation.Horizontal, Direction.Input, Port.Capacity.Single, typeof(bool));
+                output = InstantiatePort(Orientation.Vertical, Direction.Output, Port.Capacity.Multi, typeof(bool));
             }
             else if (node is DecoratorNode)
             {
-                input = InstantiatePort(Orientation.Horizontal, Direction.Input, Port.Capacity.Single, typeof(bool));
+                output = InstantiatePort(Orientation.Vertical, Direction.Output, Port.Capacity.Single, typeof(bool));
             }
             else if (node is RootNode)
             {
-                input = InstantiatePort(Orientation.Horizontal, Direction.Input, Port.Capacity.Single, typeof(bool));
+                output = InstantiatePort(Orientation.Vertical, Direction.Output, Port.Capacity.Single, typeof(bool));
             }
 
-            if (input != null)
+            if (output != null)
             {
-                input.name = "";
-                inputContainer.Add(input);
+                output.name = "";
+                outputContainer.Add(output);
             }
         }
 
@@ -56,25 +56,25 @@ namespace FlowGraph.Editor
             //todo need work from attribute
             if (node is ActionNode)
             {
-                input = InstantiatePort(Orientation.Horizontal, Direction.Input, Port.Capacity.Single, typeof(bool));
+                input = InstantiatePort(Orientation.Vertical, Direction.Input, Port.Capacity.Single, typeof(bool));
             }
             else if (node is CompositeNode)
             {
-                output = InstantiatePort(Orientation.Horizontal, Direction.Output, Port.Capacity.Multi, typeof(bool));
+                input = InstantiatePort(Orientation.Vertical, Direction.Input, Port.Capacity.Single, typeof(bool));
             }
             else if (node is DecoratorNode)
             {
-                output = InstantiatePort(Orientation.Horizontal, Direction.Output, Port.Capacity.Single, typeof(bool));
+                input = InstantiatePort(Orientation.Vertical, Direction.Input, Port.Capacity.Single, typeof(bool));
             }
             else if (node is RootNode)
             {
-                output = InstantiatePort(Orientation.Horizontal, Direction.Output, Port.Capacity.Single, typeof(bool));
+                
             }
 
-            if (output != null)
+            if (input != null)
             {
-                output.name = "";
-                outputContainer.Add(output);
+                input.name = "";
+                inputContainer.Add(input);
             }
         }
 

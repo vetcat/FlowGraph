@@ -1,6 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEditor.Callbacks;
 
 namespace FlowGraph.Editor
 {
@@ -17,6 +18,18 @@ namespace FlowGraph.Editor
         {
             BehaviorTreeEditor wnd = GetWindow<BehaviorTreeEditor>();
             wnd.titleContent = new GUIContent("BehaviorTreeEditor");
+        }
+
+        [OnOpenAsset]
+        public static bool OnOpenAsset(int instanceId, int line)
+        {
+            if (Selection.activeObject is BehaviorTree)
+            {
+                OpenWindow();
+                return true;
+            }
+
+            return false;
         }
 
         public void CreateGUI()
