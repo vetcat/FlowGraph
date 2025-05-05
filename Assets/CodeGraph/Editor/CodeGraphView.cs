@@ -1,3 +1,4 @@
+using CodeGraph.Runtime;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -8,9 +9,13 @@ namespace CodeGraph.Editor
     public class CodeGraphView : GraphView
     {
         private SerializedObject m_serializedObject;
-        public CodeGraphView(SerializedObject serializedObject)
+        private CodeGraphEditorWindow m_window;
+        public CodeGraphEditorWindow window => m_window;
+        
+        public CodeGraphView(SerializedObject serializedObject, CodeGraphEditorWindow win)
         {
             m_serializedObject = serializedObject;
+            m_window = win;
             
             var backGround = new GridBackground();
             backGround.name = "Grid";
@@ -24,6 +29,11 @@ namespace CodeGraph.Editor
             var styleSheet =
                 AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/CodeGraph/Editor/USS/CodeGraphEditor.uss");
             styleSheets.Add(styleSheet);
+        }
+
+        public void Add(CodeGraphNode node)
+        {
+            Debug.LogError($"[CodeGraphView] Add node");
         }
     }
 }

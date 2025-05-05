@@ -1,3 +1,4 @@
+using CodeGraph.Runtime;
 using UnityEditor;
 using UnityEngine;
 
@@ -20,6 +21,7 @@ namespace CodeGraph.Editor
                 if (w.currentGraph == target)
                 {
                     w.Focus();
+                    w.Load(target);
                     return;
                 }
             }
@@ -39,7 +41,7 @@ namespace CodeGraph.Editor
         private void DrawGraph()
         {
             m_serializedObject = new SerializedObject(m_currentGraph);
-            m_currentView = new CodeGraphView(m_serializedObject);
+            m_currentView = new CodeGraphView(m_serializedObject, this);
             rootVisualElement.Add(m_currentView);
         }
     }
