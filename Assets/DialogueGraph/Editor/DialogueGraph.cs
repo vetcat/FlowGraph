@@ -1,5 +1,6 @@
 using System;
 using UnityEditor;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -18,6 +19,17 @@ namespace DialogueGraph.Editor
 
         private void OnEnable()
         {
+            ConstructGraphView();
+            GenerateToolBar();
+        }
+        
+        private void OnDisable()
+        {
+            rootVisualElement.Remove(_graphView);
+        }
+
+        private void ConstructGraphView()
+        {
             _graphView = new DialogueGraphView()
             {
                 name = "Dialogue Graph"
@@ -27,9 +39,18 @@ namespace DialogueGraph.Editor
             rootVisualElement.Add(_graphView);
         }
 
-        private void OnDisable()
+        private void GenerateToolBar()
         {
-            rootVisualElement.Remove(_graphView);
+            var toolBar = new Toolbar();
+            var nodeCreateButton = new Button( () =>
+            {
+                _graphView.CreateNode("Dialogue Node");
+            });
+
+            nodeCreateButton.text = "Create Node";
+            
+            toolBar.Add(nodeCreateButton);
+            rootVisualElement.Add(toolBar);
         }
     }
 }
